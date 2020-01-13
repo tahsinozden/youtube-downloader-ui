@@ -10,10 +10,10 @@
 
   <ion-item>
     <ion-label>YouTube Video URL</ion-label>
-    <ion-input placeholder="url"></ion-input>
+    <ion-input placeholder="url" [(ngModel)]="videoUrl"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-button color="primary">Download</ion-button>
+    <ion-button color="primary" (click)="onDownloadClick(videoUrl)">Download</ion-button>
   </ion-item>
 
 </ion-content>
