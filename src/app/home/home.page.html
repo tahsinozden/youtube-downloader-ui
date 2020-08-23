@@ -1,0 +1,67 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      YouTube Video Downloader
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">YouTube Video Downloader</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<!--  FIXME-->
+<!--  <app-dark-mode></app-dark-mode>-->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">Youtube Video URL</ion-label>
+          <ion-input [(ngModel)]="videoUrl" (ionChange)="onVideoUrlChange()" (change)="onVideoUrlChange()"></ion-input>
+        </ion-item>
+
+<!--        <ion-item *ngIf="videoInformationSummary">-->
+<!--          <ion-label>Select Format</ion-label>-->
+<!--          <ion-select interface="popover" [(ngModel)]="videoInformationSummary">-->
+<!--            <ion-select-option [value]="format" *ngFor="let format of videoInformationSummary.formats">-->
+<!--              {{ format.format }}-->
+<!--            </ion-select-option>-->
+<!--          </ion-select>-->
+<!--        </ion-item>-->
+
+        <div *ngIf="!isLoading">
+          <ion-item-divider *ngIf="videoInformationSummary">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="11"></ion-col>
+                <ion-col size="1">
+                  <ion-icon name="close-circle-outline"
+                            style="zoom:2.0;"
+                            (click)="onVideoInfoCloseClick()"
+                  ></ion-icon>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col *ngFor="let format of videoInformationSummary.formats">
+                  <ion-label>{{ format.format }}, <b>Format:</b> {{ format.ext }}, <b>Size:</b> {{ fileSizeInMb(format.filesize) }} MB</ion-label>
+                  <ion-checkbox color="light" (ionChange)="onCheckBoxChange($event, format.formatId)"></ion-checkbox>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item-divider>
+
+          <ion-button color="primary" (click)="getVideoInformation()">Get Video Format information</ion-button>
+          <ion-button color="primary" (click)="downloadVideo()">Download</ion-button>
+        </div>
+
+        <ion-progress-bar *ngIf="isLoading" type="indeterminate"></ion-progress-bar>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
